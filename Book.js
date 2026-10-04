@@ -1,7 +1,11 @@
+const myLibrary = [];
+
+
+
 function Book(title, author, pages, read) {
 
     if (!new.target) {
-        throw Error("Fuck off, you have to use new for this");
+        throw Error("You have to use new to call this function");
     };
 
     this.name = this.name;
@@ -16,20 +20,44 @@ function Book(title, author, pages, read) {
     return this;
 }
 
-function Player(name, marker) {
-  if (!new.target) {
-    throw Error("You must use the 'new' operator to call the constructor");
-  }
-  this.name = name;
-  this.marker = marker;
-  this.sayName = function() {
-    console.log(this.name);
-  };
+function addBookToLibrary(title, author, pages, read) {
+
+    var myInput = document.getElementById("bookName");
+    var book = myInput.value;
+    var myInput = document.getElementById("author");
+    var author = myInput.value;
+    var myInput = document.getElementById("pages");
+    var pages = myInput.value;
+    var myInput = document.getElementById("read");
+    var read = myInput.checked;
+    
+    book = new Book(book, author, pages, read);
+    myLibrary.push(book);
+    alert(`Size of library = ${myLibrary.length}`)
 }
 
+function displayBooks() {
 
-Player.prototype.sayHello = function() {
-  console.log("Hello, I'm a player!");
-};
+}
 
+const dialog = document.getElementById('addBookDialog');
+const openBtn = document.getElementById('addBookDlgButton');
+const addBookBtn = document.getElementById('addBookButton');
+const cancelBtn = document.getElementById('cancelButton');
 
+// Open as a Modal (Blocks background interaction + adds a dim backdrop)
+openBtn.addEventListener('click', () => {
+  dialog.showModal(); 
+});
+
+// Close the dialog
+addBookBtn.addEventListener('click', () => {
+  addBookToLibrary();
+  
+  dialog.close();
+});
+
+// Close the dialog
+cancelBtn.addEventListener('click', () => {
+  dialog.close();
+});
