@@ -59,6 +59,15 @@ function deleteBook(id) {
       displayBooks();
 }
 
+function toggleRead(id) {
+      const index = myLibrary.findIndex(book => book.id === id);
+    
+      if (index !== -1) {
+          myLibrary[index].read = !myLibrary[index].read ;
+      }
+      displayBooks();
+}
+
 function displayBook(book) {
   const container = document.getElementById("myContainer");
   const lineElement = document.createElement('p');
@@ -67,19 +76,29 @@ function displayBook(book) {
   // 2. Insert just the book's text info into the paragraph
   lineElement.textContent = `Title: ${book.title}, Author: ${book.author}, Number of pages: ${book.pages}, Read? : ${book.read ? "Yes" : "No"} `;
 
-  // 3. Create your button
-  const btn = document.createElement('button');
-  btn.textContent = 'Delete book';
+  //  Create delete button
+  const deleteBtn = document.createElement('button');
+  deleteBtn.textContent = 'Delete book';
 
-  // 4. Attach your event function with the unique ID
-  btn.addEventListener('click', () => {
+  // Attach event function with the unique ID
+  deleteBtn.addEventListener('click', () => {
       deleteBook(book.id); 
   });
 
-  // 5. Append the button INSIDE the paragraph element (puts it right at the end of the text)
-  lineElement.appendChild(btn);
+  lineElement.appendChild(deleteBtn);
 
-  // 6. Finally, push the entire paragraph (with the button inside it) into your container
+  // create toggleRead button
+  const toggleReadBtn = document.createElement('button');
+  toggleReadBtn.textContent = 'Toggle Read';
+
+  // Attach event function with the unique ID
+  toggleReadBtn.addEventListener('click', () => {
+      toggleRead(book.id); 
+  });
+
+  lineElement.appendChild(toggleReadBtn);
+
+  // Push the entire paragraph (with the buttons inside it) into your container
   container.appendChild(lineElement);
 }
 
