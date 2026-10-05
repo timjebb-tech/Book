@@ -50,7 +50,13 @@ function clearBooksDisplay() {
 }
 
 function deleteBook(id) {
-  alert(id);
+      const index = myLibrary.findIndex(book => book.id === id);
+    
+      // 2. Chop it out of the array safely
+      if (index !== -1) {
+          myLibrary.splice(index, 1);
+      }
+      displayBooks();
 }
 
 function displayBook(book) {
@@ -63,7 +69,7 @@ function displayBook(book) {
 
   // 3. Create your button
   const btn = document.createElement('button');
-  btn.textContent = 'Greet User';
+  btn.textContent = 'Delete book';
 
   // 4. Attach your event function with the unique ID
   btn.addEventListener('click', () => {
@@ -77,24 +83,36 @@ function displayBook(book) {
   container.appendChild(lineElement);
 }
 
-const dialog = document.getElementById('addBookDialog');
-const openBtn = document.getElementById('addBookDlgButton');
+const addBookDialog = document.getElementById('addBookDialog');
+const bookForm = addBookDialog.querySelector("form");
+const addBookDlgBtn = document.getElementById('addBookDlgButton');
 const addBookBtn = document.getElementById('addBookButton');
 const cancelBtn = document.getElementById('cancelButton');
 
 // Open as a Modal (Blocks background interaction + adds a dim backdrop)
-openBtn.addEventListener('click', () => {
-  dialog.showModal(); 
+addBookDlgBtn.addEventListener('click', () => {
+  if (addBookDialog) {
+        const form = addBookDialog.querySelector('form');
+        if (form) {
+            form.reset(); 
+        }
+    }
+  addBookDialog.showModal(); 
 });
 
-// Close the dialog
 addBookBtn.addEventListener('click', () => {
   addBookToLibrary();
-  
-  dialog.close();
+  addBookDialog.close();
 });
 
-// Close the dialog
+// 2. Catch the submission and freeze it
+bookForm.addEventListener('submit', (event) => {
+    // STOP the form from reloading the page or submitting online
+    event.preventDefault(); 
+
+    addBookDialog.close(); 
+});
+
 cancelBtn.addEventListener('click', () => {
-  dialog.close();
+  addBookDialog.close();
 });
