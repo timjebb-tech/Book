@@ -135,3 +135,13 @@ bookForm.addEventListener('submit', (event) => {
 cancelBtn.addEventListener('click', () => {
   addBookDialog.close();
 });
+
+// make sure pages is numeric (without up and down arrows)
+const pagesInput = document.getElementById('pages');
+
+if (pagesInput) {
+    pagesInput.addEventListener('input', (event) => {
+        // Replace any character that is NOT a number (0-9) with nothing ""
+        event.target.value = event.target.value.replace(/[^0-9]/g, '');
+    });
+}
